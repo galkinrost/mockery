@@ -23,7 +23,7 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 /*
  * A library that enables the hooking of the standard 'require' function, such
@@ -54,11 +54,11 @@ var m = require('module'),
 function getEffectiveOptions(opts) {
     var options = {};
 
-    Object.keys(defaultOptions).forEach(function (key) {
+    Object.keys(defaultOptions).forEach(function(key) {
         options[key] = defaultOptions[key];
     });
     if (opts) {
-        Object.keys(opts).forEach(function (key) {
+        Object.keys(opts).forEach(function(key) {
             options[key] = opts[key];
         });
     }
@@ -153,7 +153,7 @@ function disable() {
     originalLoader = null;
 }
 
- /*
+/*
  * If the clean cache option is in effect, reset the module cache to an empty
  * state. Calling this function when the clean cache option is not in effect
  * will have no ill effects, but will do nothing.
@@ -172,12 +172,20 @@ function warnOnReplace(enable) {
     options.warnOnReplace = enable;
 }
 
+function warnOnReplaceDefault(enable) {
+    defaultOptions.warnOnReplace = enable;
+}
+
 /*
  * Enable or disable warnings to the console when modules are loaded that have
  * not been registered as a mock, a substitute, or allowed.
  */
 function warnOnUnregistered(enable) {
     options.warnOnUnregistered = enable;
+}
+
+function warnOnUnregisteredDefault(enable) {
+    defaultOptions.warnOnUnregistered = enable;
 }
 
 /*
@@ -252,7 +260,7 @@ function registerAllowable(mod, unhook) {
  * modules rather than a single module.
  */
 function registerAllowables(mods, unhook) {
-    mods.forEach(function (mod) {
+    mods.forEach(function(mod) {
         registerAllowable(mod, unhook);
     });
 }
@@ -266,7 +274,7 @@ function deregisterAllowable(mod) {
     if (registeredAllowables.hasOwnProperty(mod)) {
         var allow = registeredAllowables[mod];
         if (allow.unhook) {
-            allow.paths.forEach(function (p) {
+            allow.paths.forEach(function(p) {
                 delete m._cache[p];
             });
         }
@@ -280,7 +288,7 @@ function deregisterAllowable(mod) {
  * modules rather than a single module.
  */
 function deregisterAllowables(mods) {
-    mods.forEach(function (mod) {
+    mods.forEach(function(mod) {
         deregisterAllowable(mod);
     });
 }
@@ -291,10 +299,10 @@ function deregisterAllowables(mods) {
  * mockery, though.
  */
 function deregisterAll() {
-    Object.keys(registeredAllowables).forEach(function (mod) {
+    Object.keys(registeredAllowables).forEach(function(mod) {
         var allow = registeredAllowables[mod];
         if (allow.unhook) {
-            allow.paths.forEach(function (p) {
+            allow.paths.forEach(function(p) {
                 delete m._cache[p];
             });
         }
